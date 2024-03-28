@@ -63,9 +63,51 @@ app.get("/api/v1/tours/:id", (req, res) => {
       throw error;
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
+    res.status(404).json({
       status: err.status,
+      message: err.message,
+    });
+  }
+});
+
+app.patch("/api/v1/tours/:id", (req, res) => {
+  try {
+    const data = fs.readFileSync(
+      `${__dirname}/dev-data/data/tours-simple.json`,
+      {
+        encoding: "UTF-8",
+      }
+    );
+    const toursData = JSON.parse(data);
+
+    console.log("Tours Data:", toursData); // Log toursData
+
+    const foundTour = toursData.filter(
+      (tour) => tour.id === Number(req.params.id)
+    );
+
+    if (foundTour.length > 0) {
+      const foundTourIndex = toursData.findIndex(
+        (tour) => tour.id === Number(req.params.id)
+      );
+
+      const updatedTour = { ...foundTour[0], ...req.body };
+      toursData[foundTourIndex] = updatedTour;
+
+      fs.writeFile(
+        "./dev-data/data/tours-simple.json",
+        JSON.stringify(toursData),
+        () => {
+          res.status(201).send({ status: "success", data: updatedTour });
+        }
+      );
+    } else {
+      const error = { status: "fail", message: "Tour could not be updated" };
+      throw error;
+    }
+  } catch (err) {
+    res.status(404).json({
+      status: "error",
       message: err.message,
     });
   }
