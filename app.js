@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const { dirname } = require("path");
 
 const app = express();
 
@@ -105,6 +106,32 @@ app.patch("/api/v1/tours/:id", (req, res) => {
       const error = { status: "fail", message: "Tour could not be updated" };
       throw error;
     }
+  } catch (err) {
+    res.status(404).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+});
+
+app.delete("/api/v1/tours/:id", (req, res) => {
+  const id = req.params.id;
+  try {
+    const tours = JSON.parse(
+      fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`, {
+        encoding: "UTF-8",
+      })
+    );
+    const updatedTour = tours.filter((tour) => tour.id !== Number(id));
+    console.log(tours.length);
+    fs.writeFileSync(
+      `${__dirname}/dev-data/data/tours-simple.json`,
+      JSON.stringify(updatedTour),
+      () => {
+        res.json({ status: "success" });
+      }
+    );
+    res.json({ status: "success" });
   } catch (err) {
     res.status(404).json({
       status: "error",
