@@ -1,4 +1,4 @@
-const { readFileData } = require("./file");
+const { readFileData } = require("../../file");
 
 function getAllTours(req, res) {
   const PATH = "./dev-data/data/tours-simple.json";
