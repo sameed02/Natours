@@ -6,10 +6,11 @@ const { createTour } = require("../controllers/tourControllers/createTour");
 const { updateTour } = require("../controllers/tourControllers/updateTour");
 const { deleteTour } = require("../controllers/tourControllers/deleteTour");
 const { checkId } = require("../controllers/tourControllers/checkId");
+const { checkBody } = require("../controllers/tourControllers/checkBody");
 
 const tourRouter = express.Router();
 
-tourRouter.route("/").get(getAllTours).post(createTour);
+tourRouter.route("/").get(getAllTours).post(checkBody, createTour);
 
 tourRouter.param("id", checkId);
 
