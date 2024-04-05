@@ -1,7 +1,8 @@
 const { readFileData, writeFileData } = require("../../file");
+const { Tour, saveTour } = require("./../../modals/tourModals/tourSchema");
 
 function createTour(req, res) {
-  const PATH = "./dev-data/data/tours-simple.json";
+  /* const PATH = "./dev-data/data/tours-simple.json";
   const tours = readFileData(PATH);
 
   // getting last tour id
@@ -16,7 +17,10 @@ function createTour(req, res) {
     statusCode: 201,
     status: "success",
     responseData: newTour,
-  });
+  }); */
+
+  const createNewTour = new Tour({ ...req.body });
+  saveTour(res, createNewTour);
 }
 
 module.exports = { createTour };

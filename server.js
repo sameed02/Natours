@@ -4,7 +4,6 @@ const { app } = require("./app");
 
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 
-//  { useNewUrlParser: true } is used to parse the connection string and prevent the deprecation warning that was introduced in Mongoose version 5
 async function connectDB() {
   try {
     await mongoose.connect(DB);
