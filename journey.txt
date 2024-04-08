@@ -30,3 +30,7 @@ const newTour = await Tour.create({ ...req.body });
 ----------------------------------------------------
 
 3. its a common practice in Restful API that when the delete req happens we don't send any data.
+
+----------------------------------------------------
+
+4. we don't save imaged in the database itself but rather store their names on the database so later on we can actually get the names from database and get actual images from file system in our computer. 
