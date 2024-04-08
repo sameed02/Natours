@@ -1,26 +1,18 @@
-const { readFileData, writeFileData } = require("../../file");
-const { Tour, saveTour } = require("./../../modals/tourModals/tourSchema");
+const { Tour } = require("./../../models/tourModels/tourSchema");
 
-function createTour(req, res) {
-  /* const PATH = "./dev-data/data/tours-simple.json";
-  const tours = readFileData(PATH);
-
-  // getting last tour id
-  const newId = tours[tours.length - 1].id + 1;
-  // creatin new tour
-  const newTour = { id: newId, ...req.body };
-  // adding newTour in tours array
-  tours.push(newTour);
-
-  // update tours in file
-  writeFileData(res, PATH, tours, {
-    statusCode: 201,
-    status: "success",
-    responseData: newTour,
-  }); */
-
-  const createNewTour = new Tour({ ...req.body });
-  saveTour(res, createNewTour);
+async function createTour(req, res) {
+  try {
+    const newTour = await Tour.create({ ...req.body });
+    res.status(201).json({
+      status: "success",
+      data: newTour,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "invalid data sent",
+    });
+  }
 }
 
 module.exports = { createTour };

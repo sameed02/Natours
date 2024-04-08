@@ -1,15 +1,19 @@
-const { readFileData } = require("../../file");
+const { Tour } = require("./../../models/tourModels/tourSchema");
 
-function getTourById(req, res) {
-  const PATH = "./dev-data/data/tours-simple.json";
-
-  const tour = readFileData(PATH);
-  const foundTour = tour.filter((tour) => tour.id === Number(req.params.id));
-
-  res.status(200).json({
-    status: "success",
-    data: { tour: foundTour },
-  });
+async function getTourById(req, res) {
+  const id = req.params.id;
+  try {
+    const tour = await Tour.findById(id);
+    res.status(200).json({
+      status: "success",
+      data: tour,
+    });
+  } catch (err) {
+    res.status(404).send({
+      status: "fail",
+      message: "invalid id",
+    });
+  }
 }
 
 module.exports = { getTourById };

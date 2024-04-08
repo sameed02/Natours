@@ -1,9 +1,8 @@
-const { readFileData } = require("../../file");
+const { Tour } = require("./../../models/tourModels/tourSchema");
 
-function getAllTours(req, res) {
-  const PATH = "./dev-data/data/tours-simple.json";
+async function getAllTours(req, res) {
   try {
-    const tours = readFileData(PATH);
+    const tours = await Tour.find();
     res.status(200).json({
       status: "success",
       result: tours.length,

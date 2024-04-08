@@ -1,2 +1,32 @@
 #notes for future me
 
+
+1. In Express.js, router.param() is a method used to handle dynamic parameters in route paths. It allows you to define middleware functions that will be executed when certain parameters are present in the URL of a request. see checkId function in tourController as well as check doumentation for router.param for further details
+
+----------------------------------------------------
+
+2. we can create instance from our modal and then call a save method to upload the data:
+
+const createNewTour = new Tour({ ...req.body });
+createNewTour
+    .save()
+    .then((doc) => {
+      return res.status(200).json(doc);
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        status: "fail",
+        message: "tour name must be unique",
+        error: err,
+      });
+    }); 
+
+or 
+
+we can just directly pass the data in the modal using create method and await the response.   
+
+const newTour = await Tour.create({ ...req.body });
+
+----------------------------------------------------
+
+3. its a common practice in Restful API that when the delete req happens we don't send any data.
