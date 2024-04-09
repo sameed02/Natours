@@ -34,3 +34,7 @@ const newTour = await Tour.create({ ...req.body });
 ----------------------------------------------------
 
 4. we don't save imaged in the database itself but rather store their names on the database so later on we can actually get the names from database and get actual images from file system in our computer. 
+
+----------------------------------------------------
+
+5. watch lecture 94 on importing  data throught command line using process.args
