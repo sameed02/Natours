@@ -38,3 +38,31 @@ const newTour = await Tour.create({ ...req.body });
 ----------------------------------------------------
 
 5. watch lecture 94 on importing  data throught command line using process.args
+
+----------------------------------------------------
+
+6. req.params:
+
+In Express, req.params is an object containing properties mapped to the named route "parameters". These parameters are specified in the route's path. It allows you to access values passed in the URL dynamically, making your routes more flexible and customizable.
+
+example: 
+
+app.get('/users/:id', (req, res) => {
+  const userId = req.params.id;
+  res.send(`User ID: ${userId}`);
+});
+
+In this route, :id is a route parameter, and req.params.id would contain the value passed for the "id" parameter in the URL. So, if you make a GET request to /users/123, req.params.id would be "123".
+
+----------------------------------------------------
+
+7. implementing api filtering
+
+app.get('/search', (req, res) => {
+  const searchTerm = req.query.q;
+  res.send(`Search query: ${searchTerm}`);
+});
+
+if you make a request to /search?q=banana. In this case, req.query.q would be "banana".
+
+So, req.query is an object containing all the query parameters, and you access individual parameters by their keys. In this example, q is the key for the search term parameter.
