@@ -13,17 +13,16 @@ const { Tour } = require("./../../models/tourModels/tourSchema");
  */
 
 async function getAllTours(req, res) {
+  // 1. filtering
   const { page, sort, limit, fields, ...queryObj } = req.query;
-  /* 
-Tour.find(queryObj) creates a query object.
-const query = Tour.find(queryObj); stores this query object in the variable query.
-await query; pauses execution and waits for the promise returned by query to resolve, which happens when the query is executed and the results are returned.
-Once the promise is resolved, the result is assigned to the variable tours, allowing you to work with the data retrieved from the database.
+  console.log(queryObj);
 
-we're doing all this to make chain other features like pagination, sorting, limits etc
-  */
+  // 2. advanced filtering
+  let queryStr = JSON.stringify(queryObj);
+  queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`);
+
   try {
-    const query = Tour.find(queryObj);
+    const query = Tour.find(JSON.parse(queryStr));
     const tours = await query;
     res.status(200).json({
       status: "success",
