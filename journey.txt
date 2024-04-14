@@ -66,3 +66,36 @@ app.get('/search', (req, res) => {
 if you make a request to /search?q=banana. In this case, req.query.q would be "banana".
 
 So, req.query is an object containing all the query parameters, and you access individual parameters by their keys. In this example, q is the key for the search term parameter.
+
+----------------------------------------------------
+
+8. implentation for pagination
+
+calculate start page = (Page−1) × Limit+1 = (1−1) × 10 +1 = 1
+
+calculate end page index = Page×Limit = 1×10 = 10
+
+Where:
+
+Page is the current page number you are on.
+Limit is the number of results (or records) per page.
+
+Thus, for page 1, you would fetch results 1 to 10.
+
+note: if you are dealing with arrays then in calculating startt index dont include +1 in the end because arrays are zero based and including +1 will skip the element present at zeroth position in array
+
+note2: when using mongoose we only have to calculate startingIndex i.e, 
+
+query.skip(skip).limit(myLimit);
+
+where:
+
+skip is startingPageIndex and limit is contant for example 10.
+
+----------------------------------------------------
+
+9. we can call a countDocuments function on a model to calc length of documents.check lec 99 on jonas node course
+
+----------------------------------------------------
+
+10.
