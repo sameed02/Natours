@@ -1,4 +1,30 @@
 const { Tour } = require("./../../models/tourModels/tourSchema");
+const { APIFeatures } = require("./../../utils/apiFeatures");
+
+async function getAllTours(req, res) {
+  try {
+    // executing query and sending response
+    const toursApiFeatures = new APIFeatures(Tour, req.query)
+      .filter()
+      .sort()
+      .fields();
+    await toursApiFeatures.pagination();
+
+    const tours = await toursApiFeatures.query;
+    res.status(200).json({
+      status: "success",
+      result: tours.length,
+      data: { tours: tours },
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: "fail",
+      message: err.message || "Error reading file or parsing JSON",
+    });
+  }
+}
+
+module.exports = { getAllTours };
 
 /* 
  In this below code, we're grabbing filtering information from `req.query`. Initially, it might seem easy to just plug this info into `Tour.find(req.query)`. But there's a hitch: if we want to do things like sorting or limiting results, we can't because `Tour.find(req.query)` will treat those parameters as part of the filter. Instead, we need to separate out these extra features and handle them individually.
@@ -12,8 +38,9 @@ const { Tour } = require("./../../models/tourModels/tourSchema");
   } 
  */
 
-async function getAllTours(req, res) {
-  try {
+/* 
+---------------LEGACY CODE-------------------
+    
     // 1. filtering
     const { page, sort, limit, fields, ...queryObj } = req.query;
 
@@ -21,7 +48,7 @@ async function getAllTours(req, res) {
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`);
 
-    let query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr)); 
 
     // 3. Sorting
     if (sort) {
@@ -50,21 +77,5 @@ async function getAllTours(req, res) {
     if (page) {
       const numTours = await Tour.countDocuments(query);
       if (!numTours) throw new Error("this page does not exist");
-    }
-
-    // executing query and sending response
-    const tours = await query;
-    res.status(200).json({
-      status: "success",
-      result: tours.length,
-      data: { tours: tours },
-    });
-  } catch (err) {
-    res.status(500).send({
-      status: "fail",
-      message: "Error reading file or parsing JSON",
-    });
-  }
-}
-
-module.exports = { getAllTours };
+    } 
+*/
