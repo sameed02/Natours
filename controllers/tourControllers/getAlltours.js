@@ -25,10 +25,7 @@ async function getAllTours(req, res) {
 
     // 3. Sorting
     if (sort) {
-      const sortBy = sort.split(",").reduce((acc, sortBy) => {
-        acc[sortBy] = -1;
-        return acc;
-      }, {});
+      const sortBy = sort.split(",").join(" ");
       query.sort(sortBy);
     } else {
       query.sort("_id");

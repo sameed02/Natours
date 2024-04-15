@@ -92,6 +92,8 @@ where:
 
 skip is startingPageIndex and limit is contant for example 10.
 
+the way i have implemented pagination in thise course is very taxing and not scalable check bucket pattern on pagination. 
+
 ----------------------------------------------------
 
 9. we can call a countDocuments function on a model to calc length of documents.check lec 99 on jonas node course
