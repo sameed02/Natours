@@ -100,4 +100,4 @@ the way i have implemented pagination in thise course is very taxing and not sca
 
 ----------------------------------------------------
 
-10.
+10. watch jonas video on aggregation pipeline some amazing top tier stuff in there for data manupilation 
