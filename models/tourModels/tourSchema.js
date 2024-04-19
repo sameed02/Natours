@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const tourSchema = new mongoose.Schema(
   {
@@ -8,6 +9,8 @@ const tourSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+
+    slug: String,
 
     rating: { type: Number, default: 4.5 },
 
@@ -54,6 +57,18 @@ const tourSchema = new mongoose.Schema(
 tourSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
 });
+
+//Document Middleware runs before .save() and create() only. This keyword points to currently process document, each pre middleware have access to "next" just like in express.
+tourSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// runs after save, or after all pre middlewares, in post middleware we also have access to document that was just saved along with next middleware
+/* tourSchema.post("save", function (doc, next) {
+  console.log(doc);
+  next();
+}); */
 
 const Tour = mongoose.model("Tour", tourSchema);
 
