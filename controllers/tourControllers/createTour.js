@@ -10,7 +10,7 @@ async function createTour(req, res) {
   } catch (error) {
     res.status(400).json({
       status: "fail",
-      message: "invalid data sent",
+      message: error.message || "invalid data sent",
     });
   }
 }

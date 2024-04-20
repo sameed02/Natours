@@ -13,7 +13,7 @@ async function updateTour(req, res) {
   } catch (error) {
     res.status(400).json({
       status: "fail",
-      message: "invalid id",
+      message: error.message || "invalid id",
     });
   }
 }
