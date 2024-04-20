@@ -50,6 +50,11 @@ const tourSchema = new mongoose.Schema(
     images: [String],
 
     startDates: [Date],
+
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
@@ -69,6 +74,19 @@ tourSchema.pre("save", function (next) {
   console.log(doc);
   next();
 }); */
+
+// Query Middleware runs for queries i.e find. this keywords doesn't point to current processed document instead this keywords is an query Object. here /^find/ is a regular expression which means this query middleware will run for any function that starts with find when querying from database.
+tourSchema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
+  next();
+});
+
+// Aggregation Middleware here this keyword points to current aggregation obj
+tourSchema.pre("aggregate", function (next) {
+  console.log(this);
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  next();
+});
 
 const Tour = mongoose.model("Tour", tourSchema);
 
