@@ -4,6 +4,8 @@ const { app } = require("./app");
 
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 
+console.log(`environment = ${process.env.NODE_ENV}`);
+
 async function connectDB() {
   try {
     await mongoose.connect(DB);

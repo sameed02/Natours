@@ -10,7 +10,7 @@ async function getTourById(req, res, next) {
       data: tour,
     });
   } catch (err) {
-    next(new AppError("invalid id", 404));
+    next(new AppError(`no tour was found of id ${id} `, 404));
   }
 }
 

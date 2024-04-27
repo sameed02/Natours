@@ -9,7 +9,12 @@ async function createTour(req, res, next) {
       data: newTour,
     });
   } catch (err) {
-    next(new AppError(err.message, 404));
+    next(
+      new AppError(
+        `${err.code === 11000 ? "duplicate value" : `${err.message}`}`,
+        400
+      )
+    );
   }
 }
 

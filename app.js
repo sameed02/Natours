@@ -2,9 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const { AppError } = require("./utils/appError");
-const {
-  errorController,
-} = require("./controllers/errorController/errorController");
+const { globalErrorHandler } = require("./globalErrorHandler");
 
 const { tourRouter } = require("./routes/tourRoutes");
 const { userRouter } = require("./routes/userRoutes");
@@ -23,5 +21,5 @@ app.use((req, res, next) => {
   next(err);
 });
 
-app.use(errorController);
+app.use(globalErrorHandler);
 module.exports = { app };
