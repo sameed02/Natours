@@ -1,4 +1,5 @@
 const { Tour } = require("./../../models/tourModels/tourSchema");
+const { AppError } = require("./../../utils/appError");
 
 async function getMonthlyPlan(req, res, next) {
   try {
@@ -38,11 +39,8 @@ async function getMonthlyPlan(req, res, next) {
       results: plan.length,
       data: { plan },
     });
-  } catch (error) {
-    res.status(500).send({
-      status: "fail",
-      message: err.message || "Error reading file or parsing JSON",
-    });
+  } catch (err) {
+    next(new AppError(err.message, 500));
   }
 }
 

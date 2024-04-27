@@ -1,6 +1,7 @@
 const { Tour } = require("./../../models/tourModels/tourSchema");
+const { AppError } = require("./../../utils/appError");
 
-async function updateTour(req, res) {
+async function updateTour(req, res, next) {
   try {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -10,11 +11,8 @@ async function updateTour(req, res) {
       status: "success",
       data: { tour },
     });
-  } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: error.message || "invalid id",
-    });
+  } catch (err) {
+    next(new AppError("invalid id", 404));
   }
 }
 

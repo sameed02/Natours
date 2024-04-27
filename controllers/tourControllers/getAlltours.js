@@ -1,7 +1,8 @@
 const { Tour } = require("./../../models/tourModels/tourSchema");
 const { APIFeatures } = require("./../../utils/apiFeatures");
+const { AppError } = require("./../../utils/appError");
 
-async function getAllTours(req, res) {
+async function getAllTours(req, res, next) {
   try {
     // executing query and sending response
     const toursApiFeatures = new APIFeatures(Tour, req.query)
@@ -17,10 +18,7 @@ async function getAllTours(req, res) {
       data: { tours: tours },
     });
   } catch (err) {
-    res.status(500).send({
-      status: "fail",
-      message: err.message || "Error reading file or parsing JSON",
-    });
+    next(new AppError(err.message, 404));
   }
 }
 

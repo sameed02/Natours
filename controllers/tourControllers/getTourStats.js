@@ -1,4 +1,5 @@
 const { Tour } = require("./../../models/tourModels/tourSchema");
+const { AppError } = require("./../../utils/appError");
 
 async function getTourStats(req, res, next) {
   try {
@@ -27,10 +28,7 @@ async function getTourStats(req, res, next) {
       data: { stats },
     });
   } catch (err) {
-    res.status(500).send({
-      status: "fail",
-      message: err.message || "Error reading file or parsing JSON",
-    });
+    next(new AppError(err.message, 404));
   }
 }
 

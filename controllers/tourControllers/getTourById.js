@@ -1,6 +1,7 @@
 const { Tour } = require("./../../models/tourModels/tourSchema");
+const { AppError } = require("./../../utils/appError");
 
-async function getTourById(req, res) {
+async function getTourById(req, res, next) {
   const id = req.params.id;
   try {
     const tour = await Tour.findById(id);
@@ -9,10 +10,7 @@ async function getTourById(req, res) {
       data: tour,
     });
   } catch (err) {
-    res.status(404).send({
-      status: "fail",
-      message: "invalid id",
-    });
+    next(new AppError("invalid id", 404));
   }
 }
 
