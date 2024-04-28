@@ -1,4 +1,4 @@
-const { Tour } = require("./../../models/tourModels/tourSchema");
+const { Tour } = require("../../models/tourModels/tourModel");
 const { AppError } = require("./../../utils/appError");
 
 async function getTourStats(req, res, next) {

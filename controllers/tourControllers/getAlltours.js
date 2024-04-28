@@ -1,4 +1,4 @@
-const { Tour } = require("./../../models/tourModels/tourSchema");
+const { Tour } = require("../../models/tourModels/tourModel");
 const { APIFeatures } = require("./../../utils/apiFeatures");
 const { AppError } = require("./../../utils/appError");
 
