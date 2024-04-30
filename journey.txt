@@ -105,3 +105,12 @@ the way i have implemented pagination in thise course is very taxing and not sca
 ----------------------------------------------------
 
 11. Error Handelling Express: whenever we pass anything into next, it will assume that it is an error, and it will then skip all the other middlewares in the middleware stack and sent the error that we passed into our global error handling middleware,
+
+----------------------------------------------------
+
+technologies used:
+
+1. BCrypt for hashing password
+2. Validator package for validations 
+3. Morgan
+4. Slugify 

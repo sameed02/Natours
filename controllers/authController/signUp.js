@@ -1,6 +1,6 @@
 const { User } = require("../../models/userModels/userModel");
 const { AppError } = require("./../../utils/appError");
-const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 async function signUp(req, res, next) {
   try {
