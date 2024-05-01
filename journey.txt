@@ -114,3 +114,4 @@ technologies used:
 2. Validator package for validations 
 3. Morgan
 4. Slugify 
+5. jsonwebtoken for authentication 

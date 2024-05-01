@@ -1,13 +1,24 @@
 const { User } = require("../../models/userModels/userModel");
 const { AppError } = require("./../../utils/appError");
-const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 async function signUp(req, res, next) {
   try {
-    const newUser = await User.create({ ...req.body });
+    const newUser = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      passwordConfirm: req.body.passwordConfirm,
+    });
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_KEY, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
     res.status(201).send({
       status: "success",
-      data: newUser,
+      token,
+      data: { user: newUser },
     });
   } catch (err) {
     if (err.code === 11000) {
