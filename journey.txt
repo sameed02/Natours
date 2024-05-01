@@ -108,6 +108,11 @@ the way i have implemented pagination in thise course is very taxing and not sca
 
 ----------------------------------------------------
 
+12. when we want the field that is by default not selected i.e in model we do select: false so that field is not fetched for example passwords. we need to use select("+nameOfField"). So password in this case. example: User.Find({}).Select("+password")
+
+----------------------------------------------------
+
+
 technologies used:
 
 1. BCrypt for hashing password

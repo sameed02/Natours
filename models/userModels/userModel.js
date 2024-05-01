@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
     trim: true,
     minlength: [8, "Password must be at least 8 characters long"],
     required: [true, "Please enter your password"],
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -60,6 +61,14 @@ userSchema.pre("save", async function (next) {
     next(new AppError(err.message, 400));
   }
 });
+
+// instance method is basically a method that is gonna be available on all documents of a certain collection, candidatePassword = coming from user && userPassword = coming from Database
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model("User", userSchema);
 
