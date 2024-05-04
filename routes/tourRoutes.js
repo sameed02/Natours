@@ -10,6 +10,9 @@ const { getTourStats } = require("../controllers/tourControllers/getTourStats");
 const {
   getMonthlyPlan,
 } = require("../controllers/tourControllers/getMonthlyPlan");
+const {
+  protectRoutes,
+} = require("./../controllers/authController/protectRoutes");
 
 const tourRouter = express.Router();
 
@@ -17,7 +20,7 @@ tourRouter.route("/tour-stats").get(getTourStats);
 tourRouter.route("/monthly-plan/:year").get(getMonthlyPlan);
 tourRouter.route("/top-5-tours").get(topTours, getAllTours);
 
-tourRouter.route("/").get(getAllTours).post(createTour);
+tourRouter.route("/").get(protectRoutes, getAllTours).post(createTour);
 
 tourRouter.route("/:id").get(getTourById).patch(updateTour).delete(deleteTour);
 

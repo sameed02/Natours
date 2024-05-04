@@ -4,11 +4,20 @@ const jwt = require("jsonwebtoken");
 
 async function signUp(req, res, next) {
   try {
+    const {
+      name,
+      email,
+      password,
+      passwordConfirm,
+      passwordChangedAt,
+      ...other
+    } = req.body;
     const newUser = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      passwordConfirm: req.body.passwordConfirm,
+      name,
+      email,
+      password,
+      passwordConfirm,
+      passwordChangedAt,
     });
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_KEY, {

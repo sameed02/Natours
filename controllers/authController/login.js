@@ -15,6 +15,7 @@ async function login(req, res, next) {
   // check if user exists and pass is correct
   const user = await User.findOne({ email }).select("+password");
 
+  // user.correctPassword is instance method defined on User Model
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
   }
