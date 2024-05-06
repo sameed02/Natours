@@ -13,6 +13,7 @@ const {
 const {
   protectRoutes,
 } = require("./../controllers/authController/protectRoutes");
+const { permission } = require("./../controllers/authController/permission");
 
 const tourRouter = express.Router();
 
@@ -22,6 +23,10 @@ tourRouter.route("/top-5-tours").get(topTours, getAllTours);
 
 tourRouter.route("/").get(protectRoutes, getAllTours).post(createTour);
 
-tourRouter.route("/:id").get(getTourById).patch(updateTour).delete(deleteTour);
+tourRouter
+  .route("/:id")
+  .get(getTourById)
+  .patch(updateTour)
+  .delete(protectRoutes, permission("admin", "lead"), deleteTour);
 
 module.exports = { tourRouter };

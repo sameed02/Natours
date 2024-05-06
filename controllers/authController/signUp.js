@@ -10,6 +10,7 @@ async function signUp(req, res, next) {
       password,
       passwordConfirm,
       passwordChangedAt,
+      role,
       ...other
     } = req.body;
     const newUser = await User.create({
@@ -18,6 +19,7 @@ async function signUp(req, res, next) {
       password,
       passwordConfirm,
       passwordChangedAt,
+      role,
     });
 
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_KEY, {
