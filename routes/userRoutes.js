@@ -19,7 +19,7 @@ const userRouter = express.Router();
 userRouter.route("/sign-up").post(signUp);
 userRouter.route("/login").post(login);
 userRouter.route("/forgotPassword").post(forgotPassword);
-userRouter.route("/resetPassword").post(resetPassword);
+userRouter.route("/resetPassword/:token").patch(resetPassword);
 
 userRouter.route("/allUsers").get(getAllUsers);
 userRouter.route("/:id").get(getUserById).patch(updateUser).delete(deleteUser);

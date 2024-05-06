@@ -121,3 +121,4 @@ technologies used:
 4. Slugify 
 5. jsonwebtoken for authentication 
 6. crypto (built in module) to generate random bytes
+7. nodemailer for sending emails
