@@ -78,6 +78,15 @@ userSchema.pre("save", async function (next) {
   }
 });
 
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) {
+    return next();
+  } else {
+    this.passwordChangedAt = Date.now() - 1000;
+    next();
+  }
+});
+
 // instance method is basically a method that is gonna be available on all documents of a certain collection, candidatePassword = coming from user && userPassword = coming from Database
 userSchema.methods.correctPassword = async function (
   candidatePassword,
