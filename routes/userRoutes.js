@@ -13,6 +13,12 @@ const {
 const {
   resetPassword,
 } = require("./../controllers/authController/resetPassword");
+const {
+  updatePassword,
+} = require("./../controllers/authController/updatePassword");
+const {
+  protectRoutes,
+} = require("./../controllers/authController/protectRoutes");
 
 const userRouter = express.Router();
 
@@ -20,6 +26,7 @@ userRouter.route("/sign-up").post(signUp);
 userRouter.route("/login").post(login);
 userRouter.route("/forgotPassword").post(forgotPassword);
 userRouter.route("/resetPassword/:token").patch(resetPassword);
+userRouter.route("/updatePassword").patch(protectRoutes, updatePassword);
 
 userRouter.route("/allUsers").get(getAllUsers);
 userRouter.route("/:id").get(getUserById).patch(updateUser).delete(deleteUser);
