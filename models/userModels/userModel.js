@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
 const { AppError } = require("./../../utils/appError");
+const { type } = require("os");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -53,6 +54,12 @@ const userSchema = new mongoose.Schema({
   passwordResetToken: String,
 
   passwordResetExpires: Date,
+
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 /* ------------------- Middlewares OR Instance Methods ------------------ */
@@ -85,6 +92,12 @@ userSchema.pre("save", function (next) {
     this.passwordChangedAt = Date.now() - 1000;
     next();
   }
+});
+
+userSchema.pre(/^find/, function (next) {
+  // this points to current query
+  this.find({ active: { $ne: false } });
+  next();
 });
 
 // instance method is basically a method that is gonna be available on all documents of a certain collection, candidatePassword = coming from user && userPassword = coming from Database

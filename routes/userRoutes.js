@@ -19,7 +19,9 @@ const {
 const {
   protectRoutes,
 } = require("./../controllers/authController/protectRoutes");
+
 const { updateMe } = require("./../controllers/userControllers/updateMe");
+const { deleteMe } = require("./../controllers/userControllers/deleteMe");
 
 const userRouter = express.Router();
 
@@ -30,6 +32,7 @@ userRouter.route("/resetPassword/:token").patch(resetPassword);
 userRouter.route("/updatePassword").patch(protectRoutes, updatePassword);
 
 userRouter.route("/updateMe").patch(protectRoutes, updateMe);
+userRouter.route("/deleteMe").delete(protectRoutes, deleteMe);
 
 userRouter.route("/allUsers").get(getAllUsers);
 userRouter.route("/:id").get(getUserById).patch(updateUser).delete(deleteUser);
