@@ -123,3 +123,4 @@ technologies used:
 6. crypto (built in module) to generate random bytes
 7. nodemailer for sending emails
 8. express rate-limit for Rate Limitng
+9. helmet for setting up security headers
