@@ -1,6 +1,7 @@
 const { AppError } = require("./../../utils/appError");
 const { User } = require("./../../models/userModels/userModel");
-const jwt = require("jsonwebtoken");
+
+const { createSendToken } = require("./createSendToke");
 
 async function updatePassword(req, res, next) {
   try {
@@ -25,11 +26,7 @@ async function updatePassword(req, res, next) {
     await currentUser.save();
 
     // log the user i.e sent back jwt token to client
-    const token = jwt.sign({ id: currentUser._id }, process.env.JWT_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
-
-    res.status(200).send({ status: "success", token });
+    createSendToken(res, currentUser, 200);
   } catch (err) {
     return next(new AppError(err.message, err.statusCode));
   }

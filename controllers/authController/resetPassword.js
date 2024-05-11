@@ -1,7 +1,7 @@
 const { AppError } = require("./../../utils/appError");
 const { User } = require("./../../models/userModels/userModel");
 const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
+const { createSendToken } = require("./createSendToke");
 
 async function resetPassword(req, res, next) {
   try {
@@ -28,12 +28,9 @@ async function resetPassword(req, res, next) {
     await currentUser.save();
 
     // update passwordChangedAt property
-    // log the user in
-    const token = jwt.sign({ id: currentUser._id }, process.env.JWT_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
 
-    res.status(200).send({ status: "success", token });
+    // log the user in
+    createSendToken(res, currentUser, 200);
   } catch (err) {
     return next(new AppError(err.message, err.statusCode));
   }

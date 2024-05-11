@@ -1,6 +1,6 @@
 const { User } = require("../../models/userModels/userModel");
 const { AppError } = require("./../../utils/appError");
-const jwt = require("jsonwebtoken");
+const { createSendToken } = require("./createSendToke");
 
 async function signUp(req, res, next) {
   try {
@@ -22,15 +22,7 @@ async function signUp(req, res, next) {
       role,
     });
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    });
-
-    res.status(201).send({
-      status: "success",
-      token,
-      data: { user: newUser },
-    });
+    createSendToken(res, newUser, 201, { user: newUser });
   } catch (err) {
     if (err.code === 11000) {
       const duplcateField = Object.keys(err.keyValue)[0];

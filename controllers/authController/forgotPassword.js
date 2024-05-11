@@ -33,7 +33,9 @@ async function forgotPassword(req, res, next) {
   } catch (err) {
     currentUser.passwordResetToken = undefined;
     currentUser.passwordResetExpires = undefined;
+
     await currentUser.save({ validateBeforeSave: false });
+
     return next(
       new AppError(
         "There was an error sending email please try again !" || err.message,

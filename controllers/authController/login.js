@@ -1,6 +1,6 @@
 const { User } = require("../../models/userModels/userModel");
-const jwt = require("jsonwebtoken");
 const { AppError } = require("./../../utils/appError");
+const { createSendToken } = require("./createSendToke");
 
 async function login(req, res, next) {
   const { email, password } = req.body;
@@ -21,11 +21,7 @@ async function login(req, res, next) {
   }
 
   // sent the jwt token back to client
-  const token = jwt.sign({ id: user._id }, process.env.JWT_KEY, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-
-  res.status(200).send({ status: "success", token });
+  createSendToken(res, user, 200);
 }
 
 module.exports = { login };
