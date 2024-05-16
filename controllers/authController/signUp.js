@@ -1,6 +1,6 @@
 const { User } = require("../../models/userModels/userModel");
 const { AppError } = require("./../../utils/appError");
-const { createSendToken } = require("./createSendToke");
+const { createSendToken } = require("./createSendToken");
 
 async function signUp(req, res, next) {
   try {

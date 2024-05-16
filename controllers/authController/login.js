@@ -1,6 +1,6 @@
 const { User } = require("../../models/userModels/userModel");
 const { AppError } = require("./../../utils/appError");
-const { createSendToken } = require("./createSendToke");
+const { createSendToken } = require("./createSendToken");
 
 async function login(req, res, next) {
   const { email, password } = req.body;

@@ -1,7 +1,7 @@
 const { AppError } = require("./../../utils/appError");
 const { User } = require("./../../models/userModels/userModel");
 const crypto = require("crypto");
-const { createSendToken } = require("./createSendToke");
+const { createSendToken } = require("./createSendToken");
 
 async function resetPassword(req, res, next) {
   try {

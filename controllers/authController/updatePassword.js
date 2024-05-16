@@ -1,7 +1,7 @@
 const { AppError } = require("./../../utils/appError");
 const { User } = require("./../../models/userModels/userModel");
 
-const { createSendToken } = require("./createSendToke");
+const { createSendToken } = require("./createSendToken");
 
 async function updatePassword(req, res, next) {
   try {
