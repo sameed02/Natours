@@ -124,3 +124,4 @@ technologies used:
 7. nodemailer for sending emails
 8. express rate-limit for Rate Limitng
 9. helmet for setting up security headers
+10. hpp package for preventing parameter pollution 

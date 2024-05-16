@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
+const hpp = require("hpp");
 
 const { AppError } = require("./utils/appError");
 const { globalErrorHandler } = require("./globalErrorHandler");
@@ -30,6 +31,20 @@ app.use("/api", limiter);
 
 // Body parser, reading data from body & putting into req.body
 app.use(express.json({ limit: "10kb" }));
+
+// preventing parameter pollution, whitelist is array of properties for which we allow duplicate values
+app.use(
+  hpp({
+    whitelist: [
+      "duration",
+      "ratingsQuantity",
+      "ratingsAverage",
+      "maxGroupSize",
+      "difficulty",
+      "price",
+    ],
+  })
+);
 
 //routes
 app.use("/api/v1/tours", tourRouter);
