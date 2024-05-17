@@ -112,6 +112,9 @@ the way i have implemented pagination in thise course is very taxing and not sca
 
 ----------------------------------------------------
 
+13. Whenever you define an object in an array, Mongoose creates a schema for it behind the scenes so it treats it as a subdocument. A consequence of this is that Mongoose will add an _id field to each object. check tourModel Locations for example
+
+----------------------------------------------------
 
 technologies used:
 

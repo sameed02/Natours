@@ -2,7 +2,7 @@ const dotenv = require("dotenv").config({ path: `./config.env` });
 const mongoose = require("mongoose");
 
 const { readFileData } = require("./../../file");
-const { Tour } = require("./../../models/tourModels/tourSchema");
+const { Tour } = require("./../../models/tourModels/tourModel");
 
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 
@@ -19,7 +19,7 @@ connectDB();
 
 // Read-File
 
-const tours = readFileData(`${__dirname}/tours-simple.json`);
+const tours = readFileData(`${__dirname}/tours.json`);
 
 // Import data into DB
 

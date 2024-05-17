@@ -82,6 +82,32 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    startLocation: {
+      type: {
+        type: String,
+        default: "Point",
+        enum: ["Point"], // 'type' must be 'Point'
+      },
+      coordinates: [Number], // Array of numbers (longitude, latitude)
+      address: String,
+      description: String,
+    },
+    //Whenever you define an object in an array, Mongoose creates a schema for it behind the scenes so it treats it as a subdocument. A consequence of this is that Mongoose will add an _id field to each object.
+    locations: [
+      {
+        type: {
+          type: String,
+          default: "Point",
+          enum: ["Point"],
+        },
+        coordinates: [Number],
+
+        address: String,
+        description: String,
+        day: Number,
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
