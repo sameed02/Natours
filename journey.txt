@@ -116,6 +116,11 @@ the way i have implemented pagination in thise course is very taxing and not sca
 
 ----------------------------------------------------
 
+14. Using await inside map: When you use await inside the map callback, await ensures that each individual asynchronous operation (User.findById(id)) is awaited before the value is returned within that callback.However, the map function itself does not wait for the await to complete. Instead, map simply returns an array of promises created by the async callback function. checkTour Model pre save middleware 
+
+----------------------------------------------------
+
+
 technologies used:
 
 1. BCrypt for hashing password
