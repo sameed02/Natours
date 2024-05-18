@@ -9,6 +9,7 @@ const { globalErrorHandler } = require("./globalErrorHandler");
 
 const { tourRouter } = require("./routes/tourRoutes");
 const { userRouter } = require("./routes/userRoutes");
+const { reviewRouter } = require("./routes/reviewRoutes");
 
 /* ------------------- APP ------------------- */
 
@@ -49,6 +50,7 @@ app.use(
 //routes
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reviewRouter);
 
 // error middleware for accessing undefined routes
 app.use((req, res, next) => {

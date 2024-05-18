@@ -7,6 +7,7 @@ const { updateTour } = require("../controllers/tourControllers/updateTour");
 const { deleteTour } = require("../controllers/tourControllers/deleteTour");
 const { topTours } = require("../controllers/tourControllers/topTours");
 const { getTourStats } = require("../controllers/tourControllers/getTourStats");
+
 const {
   getMonthlyPlan,
 } = require("../controllers/tourControllers/getMonthlyPlan");
