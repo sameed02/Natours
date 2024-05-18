@@ -165,6 +165,7 @@ tourSchema.pre(/^find/, function (next) {
   this.populate({
     path: "guides",
     select: "-__v -passwordChangedAt",
+    options: { errorIfNotFound: true }, // Throw error if referenced document not found
   });
 
   next();
