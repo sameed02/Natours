@@ -15,8 +15,11 @@ const {
   protectRoutes,
 } = require("./../controllers/authController/protectRoutes");
 const { permission } = require("./../controllers/authController/permission");
+const { reviewRouter } = require("./../routes/reviewRoutes");
 
 const tourRouter = express.Router();
+
+tourRouter.use("/:tourId/reviews", reviewRouter);
 
 tourRouter.route("/tour-stats").get(getTourStats);
 tourRouter.route("/monthly-plan/:year").get(getMonthlyPlan);

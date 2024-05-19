@@ -9,10 +9,10 @@ const {
 } = require("./../controllers/reviewController/createReview");
 const { getReviews } = require("./../controllers/reviewController/getReviews");
 
-const reviewRouter = express.Router();
+const reviewRouter = express.Router({ mergeParams: true });
 
 reviewRouter
-  .route("/tourReview")
+  .route("/")
   .get(protectRoutes, permission("user"), getReviews)
   .post(protectRoutes, permission("user"), createReview);
 
