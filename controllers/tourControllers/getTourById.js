@@ -4,7 +4,7 @@ const { AppError } = require("./../../utils/appError");
 async function getTourById(req, res, next) {
   const id = req.params.id;
   try {
-    const tour = await Tour.findById(id);
+    const tour = await Tour.findById(id).populate("reviews");
     res.status(200).json({
       status: "success",
       data: tour,

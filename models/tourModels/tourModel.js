@@ -123,6 +123,13 @@ tourSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
 });
 
+///virtual populate
+tourSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "tour", // name of the field in the refrenced model.
+  localField: "_id", // tour id is stored in tourModel and in foreignModel in tour property is where tour id is also stored to connect both models with each other
+});
+
 //Document Middleware runs before .save() and create() only. This keyword points to currently process document, each pre middleware have access to "next" just like in express.
 
 tourSchema.pre("save", function (next) {

@@ -6,61 +6,64 @@ const crypto = require("crypto");
 const { AppError } = require("./../../utils/appError");
 const { type } = require("os");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: [true, "Please tell us your name!"],
-  },
-  email: {
-    type: String,
-    unique: true,
-    lowercase: true,
-    required: [true, "Please provide your email!"],
-    validate: [validator.isEmail, "Please provide valid email!"],
-  },
-  photo: {
-    type: String,
-  },
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: [true, "Please tell us your name!"],
+    },
+    email: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      required: [true, "Please provide your email!"],
+      validate: [validator.isEmail, "Please provide valid email!"],
+    },
+    photo: {
+      type: String,
+    },
 
-  role: {
-    type: String,
-    enum: ["user", "tour-guide", "lead-guide", "admin"],
-    default: "user",
-  },
+    role: {
+      type: String,
+      enum: ["user", "tour-guide", "lead-guide", "admin"],
+      default: "user",
+    },
 
-  password: {
-    type: String,
-    trim: true,
-    minlength: [8, "Password must be at least 8 characters long"],
-    required: [true, "Please enter your password"],
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    trim: true,
-    required: [true, "Please confirm your password"],
-    validate: {
-      // This validator only works on CREATE and SAVE!!!
-      validator: function (value) {
-        return value === this.password;
+    password: {
+      type: String,
+      trim: true,
+      minlength: [8, "Password must be at least 8 characters long"],
+      required: [true, "Please enter your password"],
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      trim: true,
+      required: [true, "Please confirm your password"],
+      validate: {
+        // This validator only works on CREATE and SAVE!!!
+        validator: function (value) {
+          return value === this.password;
+        },
+        message: "Passwords do not match",
       },
-      message: "Passwords do not match",
+    },
+
+    passwordChangedAt: Date,
+
+    passwordResetToken: String,
+
+    passwordResetExpires: Date,
+
+    active: {
+      type: Boolean,
+      default: true,
+      select: false,
     },
   },
-
-  passwordChangedAt: Date,
-
-  passwordResetToken: String,
-
-  passwordResetExpires: Date,
-
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
-});
+  { toJSON: { virtuals: true }, toObject: { virtuals: true } }
+);
 
 /* ------------------- Middlewares OR Instance Methods ------------------ */
 
