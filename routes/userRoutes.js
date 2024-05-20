@@ -1,10 +1,10 @@
 const express = require("express");
 const { User } = require("../models/userModels/userModel");
 const { deleteOne } = require("../controllers/factoryController/factoryDelete");
+const { updateOne } = require("../controllers/factoryController/factoryUpdate");
 
 const { getAllUsers } = require("../controllers/userControllers/getAllusers");
 const { getUserById } = require("../controllers/userControllers/getUserById");
-const { updateUser } = require("../controllers/userControllers/updateUser");
 
 const { signUp } = require("../controllers/authController/signUp");
 const { login } = require("./../controllers/authController/login");
@@ -36,10 +36,12 @@ userRouter.route("/updateMe").patch(protectRoutes, updateMe);
 userRouter.route("/deleteMe").delete(protectRoutes, deleteMe);
 
 userRouter.route("/allUsers").get(getAllUsers);
+
+// this route is only for admin, don't attemp to change password with this
 userRouter
   .route("/:id")
   .get(getUserById)
-  .patch(updateUser)
+  .patch(updateOne(User))
   .delete(deleteOne(User));
 
 module.exports = { userRouter };

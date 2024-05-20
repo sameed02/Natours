@@ -12,13 +12,19 @@ const {
 const { getReviews } = require("./../controllers/reviewController/getReviews");
 
 const { deleteOne } = require("../controllers/factoryController/factoryDelete");
+const { updateOne } = require("../controllers/factoryController/factoryUpdate");
+const {
+  setTourUserIds,
+  createOne,
+} = require("../controllers/factoryController/factoryCreate");
 
 const reviewRouter = express.Router({ mergeParams: true });
 
 reviewRouter
   .route("/")
   .get(protectRoutes, permission("user"), getReviews)
-  .post(protectRoutes, permission("user"), createReview);
+  .post(protectRoutes, permission("user"), setTourUserIds, createOne(Review));
 
-reviewRouter.route("/:id").delete(deleteOne(Review));
+reviewRouter.route("/:id").delete(deleteOne(Review)).patch(updateOne(Review));
+
 module.exports = { reviewRouter };

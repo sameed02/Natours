@@ -13,7 +13,7 @@ const { AppError } = require("../../utils/appError");
 } */
 
 function deleteOne(Model) {
-  return async function deleteTour(req, res, next) {
+  return async function deleteDoc(req, res, next) {
     try {
       const doc = await Model.findByIdAndDelete(req.params.id);
 
