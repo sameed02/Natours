@@ -34,15 +34,25 @@ const tourRouter = express.Router();
 tourRouter.use("/:tourId/reviews", setTourId, reviewRouter);
 
 tourRouter.route("/tour-stats").get(getTourStats);
-tourRouter.route("/monthly-plan/:year").get(getMonthlyPlan);
+
+tourRouter
+  .route("/monthly-plan/:year")
+  .get(
+    protectRoutes,
+    permission("admin", "lead-guide", "guide"),
+    getMonthlyPlan
+  );
 tourRouter.route("/top-5-tours").get(topTours, getAll(Tour));
 
-tourRouter.route("/").get(protectRoutes, getAll(Tour)).post(createOne(Tour));
+tourRouter
+  .route("/")
+  .get(getAll(Tour))
+  .post(protectRoutes, permission("admin", "lead-guide"), createOne(Tour));
 
 tourRouter
   .route("/:id")
   .get(getOne(Tour, "reviews"))
-  .patch(updateOne(Tour))
-  .delete(protectRoutes, permission("admin", "lead"), deleteOne(Tour));
+  .patch(protectRoutes, permission("admin", "lead-guide"), updateOne(Tour))
+  .delete(protectRoutes, permission("admin", "lead-guide"), deleteOne(Tour));
 
 module.exports = { tourRouter };

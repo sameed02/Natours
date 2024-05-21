@@ -25,6 +25,7 @@ const { updateMe } = require("./../controllers/userControllers/updateMe");
 const { deleteMe } = require("./../controllers/userControllers/deleteMe");
 const { getOne } = require("../controllers/factoryController/factoryGetOne");
 const { getAll } = require("../controllers/factoryController/factoryGetAll");
+const { permission } = require("../controllers/authController/permission");
 
 /* ------------------------ Body ------------------------ */
 
@@ -34,20 +35,24 @@ userRouter.route("/sign-up").post(signUp);
 userRouter.route("/login").post(login);
 userRouter.route("/forgotPassword").post(forgotPassword);
 userRouter.route("/resetPassword/:token").patch(resetPassword);
-userRouter.route("/updatePassword").patch(protectRoutes, updatePassword);
+
+userRouter.use(protectRoutes);
+
+userRouter.route("/updatePassword").patch(updatePassword);
 
 function setUserId(req, res, next) {
   req.params.id = req.user.id;
   next();
 }
 
-userRouter.route("/me").get(protectRoutes, setUserId, getOne(User));
-userRouter.route("/updateMe").patch(protectRoutes, updateMe);
-userRouter.route("/deleteMe").delete(protectRoutes, deleteMe);
+userRouter.use(permission("admin"));
 
 userRouter.route("/allUsers").get(getAll(User));
+userRouter.route("/me").get(setUserId, getOne(User));
+userRouter.route("/updateMe").patch(updateMe);
+userRouter.route("/deleteMe").delete(deleteMe);
 
-// this route is only for admin, don't attemp to change password with this
+// don't attemp to change password with updateOne
 userRouter
   .route("/:id")
   .get(getOne(User))

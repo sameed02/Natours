@@ -19,15 +19,17 @@ const {
 
 const reviewRouter = express.Router({ mergeParams: true });
 
+reviewRouter.use(protectRoutes);
+
 reviewRouter
   .route("/")
-  .get(protectRoutes, permission("user"), getAll(Review))
-  .post(protectRoutes, permission("user"), setTourUserIds, createOne(Review));
+  .get(permission("user"), getAll(Review))
+  .post(permission("user"), setTourUserIds, createOne(Review));
 
 reviewRouter
   .route("/:id")
   .get(getOne(Review))
-  .delete(deleteOne(Review))
-  .patch(updateOne(Review));
+  .delete(permission("user", "admin"), deleteOne(Review))
+  .patch(permission("user", "admin"), updateOne(Review));
 
 module.exports = { reviewRouter };
