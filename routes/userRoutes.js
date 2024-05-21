@@ -36,6 +36,12 @@ userRouter.route("/forgotPassword").post(forgotPassword);
 userRouter.route("/resetPassword/:token").patch(resetPassword);
 userRouter.route("/updatePassword").patch(protectRoutes, updatePassword);
 
+function setUserId(req, res, next) {
+  req.params.id = req.user.id;
+  next();
+}
+
+userRouter.route("/me").get(protectRoutes, setUserId, getOne(User));
 userRouter.route("/updateMe").patch(protectRoutes, updateMe);
 userRouter.route("/deleteMe").delete(protectRoutes, deleteMe);
 
