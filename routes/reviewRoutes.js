@@ -6,13 +6,12 @@ const {
   protectRoutes,
 } = require("./../controllers/authController/protectRoutes");
 const { permission } = require("./../controllers/authController/permission");
-const {
-  createReview,
-} = require("./../controllers/reviewController/createReview");
-const { getReviews } = require("./../controllers/reviewController/getReviews");
 
 const { deleteOne } = require("../controllers/factoryController/factoryDelete");
 const { updateOne } = require("../controllers/factoryController/factoryUpdate");
+const { getOne } = require("../controllers/factoryController/factoryGetOne");
+const { getAll } = require("../controllers/factoryController/factoryGetAll");
+
 const {
   setTourUserIds,
   createOne,
@@ -22,9 +21,13 @@ const reviewRouter = express.Router({ mergeParams: true });
 
 reviewRouter
   .route("/")
-  .get(protectRoutes, permission("user"), getReviews)
+  .get(protectRoutes, permission("user"), getAll(Review))
   .post(protectRoutes, permission("user"), setTourUserIds, createOne(Review));
 
-reviewRouter.route("/:id").delete(deleteOne(Review)).patch(updateOne(Review));
+reviewRouter
+  .route("/:id")
+  .get(getOne(Review))
+  .delete(deleteOne(Review))
+  .patch(updateOne(Review));
 
 module.exports = { reviewRouter };

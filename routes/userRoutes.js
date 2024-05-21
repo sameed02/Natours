@@ -23,6 +23,10 @@ const {
 
 const { updateMe } = require("./../controllers/userControllers/updateMe");
 const { deleteMe } = require("./../controllers/userControllers/deleteMe");
+const { getOne } = require("../controllers/factoryController/factoryGetOne");
+const { getAll } = require("../controllers/factoryController/factoryGetAll");
+
+/* ------------------------ Body ------------------------ */
 
 const userRouter = express.Router();
 
@@ -35,12 +39,12 @@ userRouter.route("/updatePassword").patch(protectRoutes, updatePassword);
 userRouter.route("/updateMe").patch(protectRoutes, updateMe);
 userRouter.route("/deleteMe").delete(protectRoutes, deleteMe);
 
-userRouter.route("/allUsers").get(getAllUsers);
+userRouter.route("/allUsers").get(getAll(User));
 
 // this route is only for admin, don't attemp to change password with this
 userRouter
   .route("/:id")
-  .get(getUserById)
+  .get(getOne(User))
   .patch(updateOne(User))
   .delete(deleteOne(User));
 
