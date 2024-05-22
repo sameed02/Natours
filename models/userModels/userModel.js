@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
 const { AppError } = require("./../../utils/appError");
-const { type } = require("os");
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,7 +25,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["user", "tour-guide", "lead-guide", "admin"],
+      enum: ["user", "guide", "lead-guide", "admin"],
       default: "user",
     },
 

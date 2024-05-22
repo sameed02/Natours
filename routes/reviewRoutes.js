@@ -23,7 +23,7 @@ reviewRouter.use(protectRoutes);
 
 reviewRouter
   .route("/")
-  .get(permission("user"), getAll(Review))
+  .get(permission("user", "admin"), getAll(Review))
   .post(permission("user"), setTourUserIds, createOne(Review));
 
 reviewRouter
