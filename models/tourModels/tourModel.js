@@ -183,7 +183,6 @@ tourSchema.pre(/^find/, function (next) {
 
 // Aggregation Middleware here this keyword points to current aggregation obj
 tourSchema.pre("aggregate", function (next) {
-  console.log(this);
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
   next();
 });
