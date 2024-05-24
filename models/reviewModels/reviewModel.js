@@ -51,15 +51,28 @@ reviewSchema.statics.calcAvgRating = async function (tourId) {
     },
   ]);
 
-  await Tour.findByIdAndUpdate(tourId, {
-    ratingsQuantity: stats[0].nRating,
-    ratingsAverage: stats[0].avgRating,
-  });
+  if (stats.length > 0) {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: stats[0].nRating,
+      ratingsAverage: stats[0].avgRating,
+    });
+  } else {
+    await Tour.findByIdAndUpdate(tourId, {
+      ratingsQuantity: 0,
+      ratingsAverage: 4.5,
+    });
+  }
   console.log(stats);
 };
 
 reviewSchema.post("save", function () {
   this.constructor.calcAvgRating(this.tour);
+  console.log(this.tour);
+});
+
+// Post middleware will get the doc as the first argument. So the post middleware will get the updated review as an argument.
+reviewSchema.post(/^findOneAnd/, async function (doc) {
+  await doc.constructor.calcAvgRating(doc.tour);
 });
 
 const Review = mongoose.model("Review", reviewSchema);
