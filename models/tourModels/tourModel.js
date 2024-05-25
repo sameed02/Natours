@@ -57,7 +57,11 @@ const tourSchema = new mongoose.Schema(
       },
     },
 
-    ratingsAverage: { type: Number, default: 4.5 },
+    ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      set: (val) => Math.round(val * 10),
+    },
 
     ratingsQuantity: { type: Number, default: 0 },
 
