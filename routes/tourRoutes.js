@@ -26,6 +26,9 @@ const {
   getAll,
   setTourId,
 } = require("../controllers/factoryController/factoryGetAll");
+const {
+  getToursWithin,
+} = require("../controllers/tourControllers/getToursWithin");
 
 /* ------------------------ Body ------------------------ */
 
@@ -43,6 +46,10 @@ tourRouter
     getMonthlyPlan
   );
 tourRouter.route("/top-5-tours").get(topTours, getAll(Tour));
+
+tourRouter
+  .route("/tours-within/:distance/center/:latlng/unit/:unit")
+  .get(getToursWithin);
 
 tourRouter
   .route("/")

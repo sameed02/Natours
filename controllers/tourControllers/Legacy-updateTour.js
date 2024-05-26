@@ -1,5 +1,5 @@
 const { Tour } = require("../../models/tourModels/tourModel");
-const { AppError } = require("./../../utils/appError");
+const { AppError } = require("../../utils/appError");
 
 async function updateTour(req, res, next) {
   try {

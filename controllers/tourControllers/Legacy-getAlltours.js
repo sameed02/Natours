@@ -1,6 +1,6 @@
 const { Tour } = require("../../models/tourModels/tourModel");
-const { APIFeatures } = require("./../../utils/apiFeatures");
-const { AppError } = require("./../../utils/appError");
+const { APIFeatures } = require("../../utils/apiFeatures");
+const { AppError } = require("../../utils/appError");
 
 async function getAllTours(req, res, next) {
   try {

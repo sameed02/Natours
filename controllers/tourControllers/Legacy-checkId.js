@@ -1,4 +1,4 @@
-const { readFileData } = require("./../../file");
+const { readFileData } = require("../../file");
 
 function checkId(req, res, next, id) {
   const PATH = "./dev-data/data/tours-simple.json";
