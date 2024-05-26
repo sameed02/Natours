@@ -188,8 +188,17 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 // Aggregation Middleware here this keyword points to current aggregation obj
-tourSchema.pre("aggregate", function (next) {
+/* tourSchema.pre("aggregate", function (next) {
   this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  next();
+}); */
+tourSchema.pre("aggregate", function (next) {
+  // Hide secret tours if geoNear is NOT used
+  if (!(this.pipeline().length > 0 && "$geoNear" in this.pipeline()[0])) {
+    this.pipeline().unshift({
+      $match: { secretTour: { $ne: true } },
+    });
+  }
   next();
 });
 

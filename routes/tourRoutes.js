@@ -29,6 +29,7 @@ const {
 const {
   getToursWithin,
 } = require("../controllers/tourControllers/getToursWithin");
+const { getDistances } = require("../controllers/tourControllers/getDistances");
 
 /* ------------------------ Body ------------------------ */
 
@@ -50,6 +51,8 @@ tourRouter.route("/top-5-tours").get(topTours, getAll(Tour));
 tourRouter
   .route("/tours-within/:distance/center/:latlng/unit/:unit")
   .get(getToursWithin);
+
+tourRouter.route("/distances/:latlng/unit/:unit").get(getDistances);
 
 tourRouter
   .route("/")
