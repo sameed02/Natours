@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const hpp = require("hpp");
+const cors = require("cors");
 
 const { AppError } = require("./utils/appError");
 const { globalErrorHandler } = require("./globalErrorHandler");
@@ -18,6 +19,10 @@ const app = express();
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 /* Global Middlewares */
+
+// Implement Cors
+app.use(cors());
+app.options("*", cors());
 
 // setting up security HTTP headers
 app.use(helmet());
