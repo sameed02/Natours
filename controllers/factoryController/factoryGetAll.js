@@ -12,11 +12,12 @@ function getAll(Model) {
       await DocApiFeatures.pagination();
 
       const doc = await DocApiFeatures.query;
-
+      const totalDoc = await Model.countDocuments();
       res.status(200).json({
         status: "success",
         result: doc.length,
         data: { doc },
+        totalDoc,
       });
     } catch (err) {
       next(new AppError(err.message, 404));
