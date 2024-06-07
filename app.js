@@ -21,15 +21,21 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 /* Global Middlewares */
 
 // Implement Cors
-app.use(cors());
-app.options("*", cors());
+
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
+
+app.use(cors(corsOptions));
+/* app.options("*", cors()); */
 
 // setting up security HTTP headers
 app.use(helmet());
 
 // limit no of api requests
 const limiter = rateLimit({
-  limit: 100, // Limit each IP to 100 requests per `window` (here, per 1 hour).
+  limit: 1000, // Limit each IP to 100 requests per `window` (here, per 1 hour).
   windowMs: 60 * 60 * 1000, // 1 hour
   message: "Too many requests from this IP, please try again in an hour!",
 });
