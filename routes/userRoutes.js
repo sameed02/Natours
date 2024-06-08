@@ -44,11 +44,11 @@ function setUserId(req, res, next) {
   req.params.id = req.user.id;
   next();
 }
+userRouter.route("/me").get(setUserId, getOne(User));
 
 userRouter.use(permission("admin"));
 
 userRouter.route("/allUsers").get(getAll(User));
-userRouter.route("/me").get(setUserId, getOne(User));
 userRouter.route("/updateMe").patch(updateMe);
 userRouter.route("/deleteMe").delete(deleteMe);
 

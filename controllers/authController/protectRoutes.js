@@ -4,20 +4,21 @@ const { User } = require("../../models/userModels/userModel");
 const { AppError } = require("./../../utils/appError");
 
 async function protectRoutes(req, res, next) {
+  let token;
   try {
     // Check if the Authorization header is present
     if (
-      !req.headers.authorization ||
-      !req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
     ) {
-      throw new Error("Unauthorized");
+      // Extract the token from the Authorization header
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
     }
 
-    // Extract the token from the Authorization header
-    const token = req.headers.authorization.split(" ")[1];
-
     if (!token) {
-      throw new Error("Unauthorized");
+      throw new AppError("Unauthorized", 401);
     }
 
     // verify token
@@ -36,7 +37,7 @@ async function protectRoutes(req, res, next) {
     req.user = currentUser;
     next();
   } catch (err) {
-    return next(new AppError(err.message, 401));
+    return next(new AppError(err.message, err.statusCode));
   }
 }
 

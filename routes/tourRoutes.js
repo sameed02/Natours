@@ -56,7 +56,7 @@ tourRouter.route("/distances/:latlng/unit/:unit").get(getDistances);
 
 tourRouter
   .route("/")
-  .get(getAll(Tour))
+  .get(protectRoutes, getAll(Tour))
   .post(protectRoutes, permission("admin", "lead-guide"), createOne(Tour));
 
 tourRouter

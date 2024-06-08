@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-function createSendToken(res, user, statusCode, data) {
+function createSendToken(res, user, statusCode) {
   const token = jwt.sign({ id: user._id }, process.env.JWT_KEY, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
@@ -10,6 +10,7 @@ function createSendToken(res, user, statusCode, data) {
     ),
 
     httpOnly: true,
+    path: "/",
   };
 
   if (process.env.NODE_ENV === "production") {
@@ -20,7 +21,7 @@ function createSendToken(res, user, statusCode, data) {
   // here we're setting password to undefined only to not send the password in response to client but the password as undefined is not persisted in DB
   user.password = undefined;
 
-  res.status(statusCode).send({ status: "success", token, data });
+  res.status(statusCode).send({ status: "success", token });
 }
 
 module.exports = { createSendToken };

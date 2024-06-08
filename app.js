@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
@@ -28,7 +29,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-/* app.options("*", cors()); */
 
 // setting up security HTTP headers
 app.use(helmet());
@@ -44,6 +44,9 @@ app.use("/api", limiter);
 // Body parser, reading data from body & putting into req.body
 app.use(express.json({ limit: "10kb" }));
 
+// parses data from cookie
+app.use(cookieParser());
+
 // preventing parameter pollution, whitelist is array of properties for which we allow duplicate values
 app.use(
   hpp({
@@ -57,6 +60,11 @@ app.use(
     ],
   })
 );
+
+app.use((req, res, next) => {
+  console.log("JWT Cookie:", req.cookies.jwt);
+  next();
+});
 
 //routes
 app.use("/api/v1/tours", tourRouter);
