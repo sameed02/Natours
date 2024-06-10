@@ -8,6 +8,7 @@ const { getUserById } = require("../controllers/userControllers/getUserById");
 
 const { signUp } = require("../controllers/authController/signUp");
 const { login } = require("./../controllers/authController/login");
+const { logout } = require("../controllers/authController/logout");
 const {
   forgotPassword,
 } = require("./../controllers/authController/forgotPassword");
@@ -33,6 +34,7 @@ const userRouter = express.Router();
 
 userRouter.route("/sign-up").post(signUp);
 userRouter.route("/login").post(login);
+userRouter.route("/logout").get(logout);
 userRouter.route("/forgotPassword").post(forgotPassword);
 userRouter.route("/resetPassword/:token").patch(resetPassword);
 
