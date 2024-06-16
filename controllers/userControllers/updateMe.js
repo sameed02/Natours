@@ -8,10 +8,10 @@ async function updateMe(req, res, next) {
   }
 
   // update document (only name and emails, we can't allow user to update role,password from here otherwise anyone could be an admin and since we are using findByIdAndUpdate which will not run our middlewares we can;t allow user to update password here)
-  const { name, email, ...other } = req.body;
+  const { name, email, photo, ...other } = req.body;
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
-    { name, email },
+    { name, email, photo },
     {
       new: true,
       runValidators: true,

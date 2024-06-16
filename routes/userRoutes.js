@@ -48,12 +48,11 @@ function setUserId(req, res, next) {
 }
 userRouter.route("/me").get(setUserId, getOne(User));
 
-userRouter.use(permission("admin"));
-
 userRouter.route("/allUsers").get(getAll(User));
 userRouter.route("/updateMe").patch(updateMe);
 userRouter.route("/deleteMe").delete(deleteMe);
 
+userRouter.use(permission("admin"));
 // don't attemp to change password with updateOne
 userRouter
   .route("/:id")
