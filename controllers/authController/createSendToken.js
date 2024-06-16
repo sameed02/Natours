@@ -21,7 +21,9 @@ function createSendToken(res, user, statusCode) {
   // here we're setting password to undefined only to not send the password in response to client but the password as undefined is not persisted in DB
   user.password = undefined;
 
-  res.status(statusCode).send({ status: "success", token });
+  res
+    .status(statusCode)
+    .send({ status: "success", token, role: "authenticated", sub: user.id });
 }
 
 module.exports = { createSendToken };
