@@ -46,6 +46,7 @@ function setUserId(req, res, next) {
   req.params.id = req.user.id;
   next();
 }
+
 userRouter.route("/me").get(setUserId, getOne(User));
 
 userRouter.route("/allUsers").get(getAll(User));
