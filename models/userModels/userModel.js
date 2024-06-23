@@ -21,6 +21,8 @@ const userSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
+      default:
+        "https://ibsdablihpfmyicmpglg.supabase.co/storage/v1/object/public/profile-img/default-avatar.jpg",
     },
 
     role: {
