@@ -133,3 +133,5 @@ technologies used:
 8. express rate-limit for Rate Limitng
 9. helmet for setting up security headers
 10. hpp package for preventing parameter pollution 
+11. nanoid for receipt id generatio
+12. razorpay for payment integration

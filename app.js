@@ -12,6 +12,7 @@ const { globalErrorHandler } = require("./globalErrorHandler");
 const { tourRouter } = require("./routes/tourRoutes");
 const { userRouter } = require("./routes/userRoutes");
 const { reviewRouter } = require("./routes/reviewRoutes");
+const { bookingRouter } = require("./routes/bookingRoutes");
 
 /* ------------------- APP ------------------- */
 
@@ -42,7 +43,10 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // Body parser, reading data from body & putting into req.body
-app.use(express.json({ limit: "10kb" }));
+app.use(express.json({ limit: "50kb" }));
+
+// to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 
 // parses data from cookie
 app.use(cookieParser());
@@ -67,9 +71,15 @@ app.use((req, res, next) => {
 });
 
 //routes
+app.use("/api/v1/getKey", (req, res, next) =>
+  res
+    .status(200)
+    .send({ status: "success", key: process.env.RAZORPAY_TEST_KEY })
+);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/bookings", bookingRouter);
 
 // error middleware for accessing undefined routes
 app.use((req, res, next) => {

@@ -18,7 +18,7 @@ async function resetPassword(req, res, next) {
 
     // update password if token hasn't expired and the user exists
     if (!currentUser) {
-      throw new Error("Token is invalid or expired !", 400);
+      throw new AppError("Token is invalid or expired !", 400);
     }
 
     currentUser.password = req.body.password;
