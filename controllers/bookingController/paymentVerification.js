@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const { Booking } = require("../../models/bookingModel/bookingModel");
 
 async function paymentVerification(req, res, next) {
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
@@ -15,10 +16,28 @@ async function paymentVerification(req, res, next) {
   console.log("sign generated:", expectedSign);
 
   if (expectedSign === razorpay_signature) {
-    // do something in db and redirect
-    res.redirect(
-      `http://localhost:5173/payment-success?payment=${razorpay_payment_id}`
-    );
+    // Save booking information in the database
+    try {
+      const order = JSON.parse(decodeURIComponent(req.query.order));
+
+      const booking = await Booking.create({
+        user: req.user._id,
+        tour: order.tourId,
+        price: order.amount,
+        createdAt: order.created_at,
+        paid: true,
+        paymentId: razorpay_payment_id,
+        orderId: razorpay_order_id,
+        signature: razorpay_signature,
+      });
+
+      res.redirect(
+        `http://localhost:5173/payment-success?payment=${razorpay_payment_id}`
+      );
+    } catch (error) {
+      console.error("Error saving booking:", error);
+      res.redirect(`http://localhost:5173/payment-success?payment="fail"`);
+    }
   } else {
     res.redirect(`http://localhost:5173/payment-success?payment="fail"`);
   }
