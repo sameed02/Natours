@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=development nodemon server.js",
-    "start:prod": "SET NODE_ENV=production&&nodemon server.js",
-    "importData": "SET NODE_ENV=development&&node dev-data/data/import-dev-data.js --import",
-    "deleteData": "SET NODE_ENV=development&&node dev-data/data/import-dev-data.js --delete",
+    "start:prod": "NODE_ENV=production&&nodemon server.js",
+    "importData": "NODE_ENV=development&&node dev-data/data/import-dev-data.js --import",
+    "deleteData": "NODE_ENV=development&&node dev-data/data/import-dev-data.js --delete",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
