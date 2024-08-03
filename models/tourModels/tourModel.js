@@ -60,7 +60,7 @@ const tourSchema = new mongoose.Schema(
     ratingsAverage: {
       type: Number,
       default: 4.5,
-      set: (val) => Math.round(val * 10),
+      set: (val) => Math.round(val * 10) / 10,
     },
 
     ratingsQuantity: { type: Number, default: 0 },
@@ -145,25 +145,6 @@ tourSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
-
-/* // this is how could have implemented using embedding
-tourSchema.pre("save", async function (next) {
-  if (this.guides && this.guides.length > 0) {
-    //Using await inside map: When you use await inside the map callback, await ensures that each individual asynchronous operation (User.findById(id)) is awaited before the value is returned within that callback.However, the map function itself does not wait for the await to complete. Instead, map simply returns an array of promises created by the async callback function.
-    try {
-      const guidesPromises = this.guides.map(async (id) => {
-        const user = await User.findById(id);
-        return user;
-      });
-
-      this.guides = await Promise.all(guidesPromises);
-    } catch (err) {
-      return next(
-        new AppError("guides is either empty or no user was found", 404)
-      );
-    }
-  }
-}); */
 
 // runs after save, or after all pre middlewares, in post middleware we also have access to document that was just saved along with next middleware
 /* tourSchema.post("save", function (doc, next) {

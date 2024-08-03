@@ -16,10 +16,13 @@ const {
   setTourUserIds,
   createOne,
 } = require("../controllers/factoryController/factoryCreate");
+const { getReviews } = require("../controllers/reviewController/getReviews");
 
 const reviewRouter = express.Router({ mergeParams: true });
 
 reviewRouter.use(protectRoutes);
+
+reviewRouter.route("/reviewByTour/:tourId").get(getReviews(Review));
 
 reviewRouter
   .route("/")
