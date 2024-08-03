@@ -91,3 +91,5 @@ app.use((req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = { app };
+
+/* "start": "SET NODE_ENV=development&&nodemon server.js", */

@@ -4,7 +4,7 @@
   "description": "practice project for learning node,express and mongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "SET NODE_ENV=development&&nodemon server.js",
+    "start": "NODE_ENV=development nodemon server.js",
     "start:prod": "SET NODE_ENV=production&&nodemon server.js",
     "importData": "SET NODE_ENV=development&&node dev-data/data/import-dev-data.js --import",
     "deleteData": "SET NODE_ENV=development&&node dev-data/data/import-dev-data.js --delete",
