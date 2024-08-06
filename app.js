@@ -25,11 +25,12 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 // Implement Cors
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: ["https://natours-client.vercel.app", "http://localhost:5173"],
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
-app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+/* app.use(cors(corsOptions)); */
 
 // setting up security HTTP headers
 app.use(helmet());
