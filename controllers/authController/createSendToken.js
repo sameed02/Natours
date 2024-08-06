@@ -11,6 +11,7 @@ function createSendToken(res, user, statusCode) {
 
     httpOnly: true,
     path: "/",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   };
 
   if (process.env.NODE_ENV === "production") {
