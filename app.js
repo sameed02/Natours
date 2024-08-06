@@ -29,7 +29,7 @@ const corsOptions = {
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
-app.options("*", cors(corsOptions));
+app.use("*", cors(corsOptions));
 /* app.use(cors(corsOptions)); */
 
 // setting up security HTTP headers
@@ -68,6 +68,11 @@ app.use(
 
 app.use((req, res, next) => {
   console.log("JWT Cookie:", req.cookies.jwt);
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log("Origin:", req.get("Origin"));
   next();
 });
 
