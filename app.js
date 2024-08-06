@@ -77,7 +77,7 @@ app.use((req, res, next) => {
 });
 
 //routes
-app.use("/api/v1/getKey", (req, res, next) =>
+app.use("/getKey", (req, res, next) =>
   res
     .status(200)
     .send({ status: "success", key: process.env.RAZORPAY_TEST_KEY })
