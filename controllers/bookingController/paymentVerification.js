@@ -32,14 +32,18 @@ async function paymentVerification(req, res, next) {
       });
 
       res.redirect(
-        `http://localhost:5173/payment-success?payment=${razorpay_payment_id}`
+        `https://natours-client.vercel.app/payment-success?payment=${razorpay_payment_id}`
       );
     } catch (error) {
       console.error("Error saving booking:", error);
-      res.redirect(`http://localhost:5173/payment-success?payment="fail"`);
+      res.redirect(
+        `https://natours-client.vercel.app/payment-success?payment="fail"`
+      );
     }
   } else {
-    res.redirect(`http://localhost:5173/payment-success?payment="fail"`);
+    res.redirect(
+      `https://natours-client.vercel.app/payment-success?payment="fail"`
+    );
   }
 }
 
